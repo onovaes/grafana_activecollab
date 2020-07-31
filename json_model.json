@@ -1,0 +1,979 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Desempenho da Produção",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "MySQL (AC)",
+      "description": "Tarefas previstas e bloqueadas",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 40
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 0
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand (po.label_id = 17 )\nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas Previstas",
+      "type": "stat"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "description": "Status = NOVO e \nStatus = REABERTO ",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 4,
+        "y": 0
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto\nSELECT count(p.id) as 'Tarefas Em Aberto'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nwhere po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NULL;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas em Aberto NAO Atribuídas",
+      "type": "stat"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "description": "Status = NOVO e \nStatus = REABERTO ",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 40
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 8,
+        "y": 0
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto\nSELECT count(p.id) as 'Tarefas Em Aberto'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nwhere po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas em Aberto Atribuídas",
+      "type": "stat"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "description": "Tarefas com status ANDAMENTO",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "noValue": "Como assim?",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 12,
+        "y": 0
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 8 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas em Andamento",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "Tarefas com status REVISAO",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "noValue": "\\o/",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 16,
+        "y": 0
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 18 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas em Revisão",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "description": "Tarefas com status CONCLUIDO",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "noValue": "\\o/",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 9 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas Concluídas",
+      "type": "stat"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 4
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand (po.label_id = 7 )\nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas Bloqueadas",
+      "type": "stat"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 0,
+        "y": 8
+      },
+      "id": 4,
+      "options": {
+        "frameIndex": 2,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Horas"
+          }
+        ]
+      },
+      "pluginVersion": "7.0.6",
+      "repeat": null,
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "SELECT \n\tuser_name AS 'Colaborador' , \n\tSUM(value) AS 'Horas' \nFROM  `time_records` \nWHERE $__timeFilter(record_date)\nAND state = 3 AND (billable_status = 1  OR billable_status = 2 OR billable_status = 3) \nGROUP BY user_name;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Faturadas",
+      "type": "table"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 8
+      },
+      "id": 15,
+      "options": {
+        "frameIndex": 2,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Horas"
+          }
+        ]
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "SELECT \n\tuser_name AS 'Colaborador' , \n\tSUM(value) AS 'Horas' \nFROM  `time_records` \nWHERE $__timeFilter(record_date)\nAND state = 3 AND (billable_status = 0  OR billable_status = 1  OR billable_status = 2 OR billable_status = 3) \nGROUP BY user_name;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Faturadas/Não Faturadas",
+      "type": "table"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 8
+      },
+      "id": 7,
+      "options": {
+        "frameIndex": 2,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Horas"
+          }
+        ]
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "SELECT \n\tc.name AS Cliente , \n\tSUM(value) AS 'Horas' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND ( tr.billable_status = 1  OR tr.billable_status = 2 OR tr.billable_status = 3) \nGROUP BY c.id;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Faturadas",
+      "type": "table"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 8
+      },
+      "id": 16,
+      "options": {
+        "frameIndex": 2,
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Horas"
+          }
+        ]
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "SELECT \n\tc.name AS Cliente , \n\tSUM(value) AS 'Horas' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND (tr.billable_status = 0  OR  tr.billable_status = 1  OR tr.billable_status = 2 OR tr.billable_status = 3) \nGROUP BY c.id;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Faturadas/Não Faturadas",
+      "type": "table"
+    },
+    {
+      "datasource": "MySQL (AC)",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 2,
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "blue",
+                "value": 10
+              },
+              {
+                "color": "green",
+                "value": 15
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT \n\tSUM(value) AS 'Horas' \nFROM  `time_records` \nWHERE $__timeFilter(record_date)\nAND state = 3 AND (billable_status = 1  OR billable_status = 2 OR billable_status = 3) ;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Horas Faturadas",
+      "type": "stat"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 25,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-7d",
+    "to": "now"
+  },
+  "timepicker": {
+    "hidden": false,
+    "nowDelay": "",
+    "refresh_intervals": [
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "America/Campo_Grande",
+  "title": "Dashboard Produção",
+  "uid": "HPWO9eGMz",
+  "version": 35
+}
