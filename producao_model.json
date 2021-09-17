@@ -21,6 +21,7 @@
   "panels": [
     {
       "datasource": "MySQL (Active Collab)",
+      "description": "Tarefas alocadas para os colaboradores",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -65,7 +66,7 @@
         ]
       },
       "gridPos": {
-        "h": 9,
+        "h": 8,
         "w": 7,
         "x": 0,
         "y": 0
@@ -109,8 +110,60 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Tarefas (Todas)",
+      "title": "Carga de Trabalho",
       "type": "table"
+    },
+    {
+      "content": "\n<h1 style=\"font-size:50px; text-align:center\"> \nTarefas </h1>\n\n\n\n\n",
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 17,
+        "x": 7,
+        "y": 0
+      },
+      "id": 23,
+      "mode": "html",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  accessed_on AS \"time\",\n  id\nFROM access_logs\nWHERE\n  $__timeFilter(accessed_on)\nORDER BY accessed_on",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "access_logs",
+          "timeColumn": "accessed_on",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "text"
     },
     {
       "datasource": "MySQL (Active Collab)",
@@ -141,10 +194,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
+        "h": 4,
         "w": 2,
         "x": 7,
-        "y": 0
+        "y": 2
       },
       "id": 11,
       "options": {
@@ -218,10 +271,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 3,
         "x": 9,
-        "y": 0
+        "y": 2
       },
       "id": 9,
       "options": {
@@ -297,10 +350,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 3,
         "x": 12,
-        "y": 0
+        "y": 2
       },
       "id": 13,
       "options": {
@@ -371,10 +424,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 3,
         "x": 15,
-        "y": 0
+        "y": 2
       },
       "id": 8,
       "options": {
@@ -417,7 +470,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Tarefas em Andamento",
+      "title": "Em Andamento",
       "type": "stat"
     },
     {
@@ -449,10 +502,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 3,
         "x": 18,
-        "y": 0
+        "y": 2
       },
       "id": 10,
       "options": {
@@ -495,7 +548,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Tarefas em Revisão",
+      "title": "Em Revisão",
       "type": "stat"
     },
     {
@@ -523,10 +576,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 7,
         "w": 3,
         "x": 21,
-        "y": 0
+        "y": 2
       },
       "id": 12,
       "options": {
@@ -569,7 +622,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Tarefas Concluídas",
+      "title": "Concluídas",
       "type": "stat"
     },
     {
@@ -604,7 +657,7 @@
         "h": 3,
         "w": 2,
         "x": 7,
-        "y": 3
+        "y": 6
       },
       "id": 14,
       "options": {
@@ -652,6 +705,153 @@
     },
     {
       "datasource": "MySQL (Active Collab)",
+      "description": "Ideal de no maximo 2 tareafs em andamento por colaborador",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "left",
+            "displayMode": "color-background"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 3
+              },
+              {
+                "color": "red",
+                "value": 5
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Colaborador"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 99
+              },
+              {
+                "id": "custom.displayMode"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 7,
+        "x": 0,
+        "y": 8
+      },
+      "id": 21,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "7.0.6",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto ATRIBUIDAS\nSELECT u.first_name AS 'Colaborador' , count(po.id) as 'Tarefas'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nleft join users u ON (u.id = po.assignee_id )\nWHERE  po.type = 'Task' \nand (po.label_id = 8)\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL\nGROUP by u.id \n;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Tarefas (Em andamento)",
+      "type": "table"
+    },
+    {
+      "content": "\n<h1 style=\"font-size:50px; text-align:center\"> \nHoras </h1>\n\n\n\n\n",
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 17,
+        "x": 7,
+        "y": 9
+      },
+      "id": 24,
+      "mode": "html",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  accessed_on AS \"time\",\n  id\nFROM access_logs\nWHERE\n  $__timeFilter(accessed_on)\nORDER BY accessed_on",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "access_logs",
+          "timeColumn": "accessed_on",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "type": "text"
+    },
+    {
+      "datasource": "MySQL (Active Collab)",
+      "description": "Horas por Colaborador",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -714,7 +914,7 @@
         "h": 11,
         "w": 7,
         "x": 7,
-        "y": 6
+        "y": 11
       },
       "id": 7,
       "options": {
@@ -760,11 +960,12 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Horas por Colaborador",
+      "title": "",
       "type": "table"
     },
     {
       "datasource": "MySQL (Active Collab)",
+      "description": "Horas por Cliente",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -804,11 +1005,11 @@
         "h": 11,
         "w": 5,
         "x": 14,
-        "y": 6
+        "y": 11
       },
       "id": 20,
       "options": {
-        "frameIndex": 0,
+        "frameIndex": 1,
         "showHeader": true,
         "sortBy": [
           {
@@ -902,7 +1103,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Horas por Cliente",
+      "title": "",
       "type": "table"
     },
     {
@@ -942,7 +1143,7 @@
         "h": 11,
         "w": 5,
         "x": 19,
-        "y": 6
+        "y": 11
       },
       "id": 17,
       "options": {
@@ -998,8 +1199,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": "left",
-            "displayMode": "color-background"
+            "align": null
           },
           "mappings": [],
           "thresholds": {
@@ -1010,12 +1210,8 @@
                 "value": null
               },
               {
-                "color": "#EAB839",
-                "value": 3
-              },
-              {
                 "color": "red",
-                "value": 5
+                "value": 80
               }
             ]
           }
@@ -1024,29 +1220,49 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Colaborador"
+              "options": "DATE_FORMAT(created_on ,\"%d/%m %H:%m\")"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 99
-              },
+                "value": 105
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "metric"
+            },
+            "properties": [
               {
-                "id": "custom.displayMode"
+                "id": "custom.width",
+                "value": 136
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 153
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 6,
         "w": 7,
         "x": 0,
-        "y": 9
+        "y": 16
       },
-      "id": 21,
+      "id": 26,
       "options": {
-        "frameIndex": 1,
         "showHeader": true,
         "sortBy": []
       },
@@ -1057,19 +1273,19 @@
           "group": [],
           "metricColumn": "created_by_name",
           "rawQuery": true,
-          "rawSql": "-- Tarefas Em aberto ATRIBUIDAS\nSELECT u.first_name AS 'Colaborador' , count(po.id) as 'Tarefas'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nleft join users u ON (u.id = po.assignee_id )\nWHERE  po.type = 'Task' \nand (po.label_id = 8)\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL\nGROUP by u.id \n;",
+          "rawSql": "SELECT\n  created_on as 'time',\n  created_by_name AS metric,\n  action\nFROM activity_logs\nWHERE\n  id > 0\nORDER BY created_on desc limit 10;",
           "refId": "A",
           "select": [
             [
               {
                 "params": [
-                  "billable_status"
+                  "created_by_id"
                 ],
                 "type": "column"
               }
             ]
           ],
-          "table": "time_records",
+          "table": "activity_logs",
           "timeColumn": "created_on",
           "timeColumnType": "datetime",
           "where": [
@@ -1083,7 +1299,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Tarefas (Em andamento)",
+      "title": "Log de Atividades",
       "type": "table"
     }
   ],
@@ -1114,5 +1330,5 @@
   "timezone": "America/Campo_Grande",
   "title": "Dashboard Produção da Equipe",
   "uid": "HPWO9eGMz",
-  "version": 86
+  "version": 106
 }
