@@ -74,7 +74,7 @@
       "id": 19,
       "options": {
         "frameIndex": 1,
-        "showHeader": true,
+        "showHeader": false,
         "sortBy": []
       },
       "pluginVersion": "7.0.6",
@@ -758,7 +758,7 @@
       "id": 21,
       "options": {
         "frameIndex": 1,
-        "showHeader": true,
+        "showHeader": false,
         "sortBy": []
       },
       "pluginVersion": "7.0.6",
@@ -1263,7 +1263,7 @@
       },
       "id": 26,
       "options": {
-        "showHeader": true,
+        "showHeader": false,
         "sortBy": []
       },
       "pluginVersion": "7.0.6",
@@ -1273,7 +1273,7 @@
           "group": [],
           "metricColumn": "created_by_name",
           "rawQuery": true,
-          "rawSql": "SELECT\n  created_on as 'time',\n  created_by_name AS metric,\n  action\nFROM activity_logs\nWHERE\n  id > 0\nORDER BY created_on desc limit 10;",
+          "rawSql": "SELECT\n  created_on as 'time',\n  created_by_name AS metric,\n  action\nFROM activity_logs\nWHERE\n  id > 0\nORDER BY created_on desc limit 5;",
           "refId": "A",
           "select": [
             [
@@ -1330,5 +1330,5 @@
   "timezone": "America/Campo_Grande",
   "title": "Dashboard Produção da Equipe",
   "uid": "HPWO9eGMz",
-  "version": 106
+  "version": 108
 }
