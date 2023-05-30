@@ -3,1203 +3,58 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Desempenho da Produção",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": 1,
   "links": [],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Tarefas alocadas para os colaboradores",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left",
-            "displayMode": "gradient-gauge"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 5
-              },
-              {
-                "color": "red",
-                "value": 15
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Colaborador"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 99
-              },
-              {
-                "id": "custom.displayMode"
-              }
-            ]
-          }
-        ]
-      },
+      "collapsed": false,
       "gridPos": {
-        "h": 8,
-        "w": 7,
+        "h": 1,
+        "w": 24,
         "x": 0,
         "y": 0
       },
-      "id": 19,
-      "options": {
-        "frameIndex": 1,
-        "showHeader": false,
-        "sortBy": []
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "created_by_name",
-          "rawQuery": true,
-          "rawSql": "-- Tarefas Em aberto ATRIBUIDAS\nSELECT u.first_name AS 'Colaborador' , count(po.id) as 'Tarefas'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nleft join users u ON (u.id = po.assignee_id )\nWHERE  po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 8 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL\nGROUP by u.id \n;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "billable_status"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "created_on",
-          "timeColumnType": "datetime",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Carga de Trabalho",
-      "type": "table"
+      "id": 36,
+      "panels": [],
+      "title": "Produção",
+      "type": "row"
     },
     {
-      "content": "\n<h1 style=\"font-size:50px; text-align:center\"> \nTarefas </h1>\n\n\n\n\n",
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
       },
-      "gridPos": {
-        "h": 2,
-        "w": 17,
-        "x": 7,
-        "y": 0
-      },
-      "id": 23,
-      "mode": "html",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  accessed_on AS \"time\",\n  id\nFROM access_logs\nWHERE\n  $__timeFilter(accessed_on)\nORDER BY accessed_on",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "id"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "access_logs",
-          "timeColumn": "accessed_on",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "text"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Tarefas previstas e bloqueadas",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "noValue": "zero",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 40
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 2,
-        "x": 7,
-        "y": 2
-      },
-      "id": 11,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand (po.label_id = 17 )\nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Previstas",
-      "type": "stat"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Status = NOVO e \nStatus = REABERTO ",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 5
-              },
-              {
-                "color": "red",
-                "value": 10
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 9,
-        "y": 2
-      },
-      "id": 9,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "center",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "repeat": null,
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "-- Tarefas Em aberto\nSELECT count(p.id) as 'Tarefas Em Aberto'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nwhere po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NULL;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Em Aberto Não Atribuídas",
-      "type": "stat"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Status = NOVO e \nStatus = REABERTO ",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "noValue": "zero",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 20
-              },
-              {
-                "color": "red",
-                "value": 40
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 12,
-        "y": 2
-      },
-      "id": 13,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "-- Tarefas Em aberto\nSELECT count(p.id) as 'Tarefas Em Aberto'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nwhere po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Em Aberto Atribuídas",
-      "type": "stat"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Tarefas com status ANDAMENTO",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "noValue": "Como assim?",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 20
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 15,
-        "y": 2
-      },
-      "id": 8,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 8 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Em Andamento",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "Tarefas com status REVISAO",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "noValue": "\\o/",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 5
-              },
-              {
-                "color": "red",
-                "value": 10
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 18,
-        "y": 2
-      },
-      "id": 10,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 18 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Em Revisão",
-      "type": "stat"
-    },
-    {
-      "datasource": null,
-      "description": "Tarefas com status CONCLUIDO",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "noValue": "\\o/",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 20
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 7,
-        "w": 3,
-        "x": 21,
-        "y": 2
-      },
-      "id": 12,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 9 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Concluídas",
-      "type": "stat"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "noValue": "zero",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 20
-              },
-              {
-                "color": "red",
-                "value": 30
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 7,
-        "y": 6
-      },
-      "id": 14,
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        }
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand (po.label_id = 7 )\nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "parent_id",
-          "timeColumnType": "int",
-          "where": []
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Bloqueadas",
-      "type": "stat"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Ideal de no maximo 2 tareafs em andamento por colaborador",
       "fieldConfig": {
         "defaults": {
           "custom": {
-            "align": "left",
-            "displayMode": "color-background"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 3
-              },
-              {
-                "color": "red",
-                "value": 5
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Colaborador"
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
             },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 99
-              },
-              {
-                "id": "custom.displayMode"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 0,
-        "y": 8
-      },
-      "id": 21,
-      "options": {
-        "frameIndex": 1,
-        "showHeader": false,
-        "sortBy": []
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "created_by_name",
-          "rawQuery": true,
-          "rawSql": "-- Tarefas Em aberto ATRIBUIDAS\nSELECT u.first_name AS 'Colaborador' , count(po.id) as 'Tarefas'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nleft join users u ON (u.id = po.assignee_id )\nWHERE  po.type = 'Task' \nand (po.label_id = 8)\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL\nGROUP by u.id \n;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "billable_status"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "created_on",
-          "timeColumnType": "datetime",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Tarefas (Em andamento)",
-      "type": "table"
-    },
-    {
-      "content": "\n<h1 style=\"font-size:50px; text-align:center\"> \nHoras </h1>\n\n\n\n\n",
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 17,
-        "x": 7,
-        "y": 9
-      },
-      "id": 24,
-      "mode": "html",
-      "targets": [
-        {
-          "format": "time_series",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": false,
-          "rawSql": "SELECT\n  accessed_on AS \"time\",\n  id\nFROM access_logs\nWHERE\n  $__timeFilter(accessed_on)\nORDER BY accessed_on",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "id"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "access_logs",
-          "timeColumn": "accessed_on",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "text"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Horas por Colaborador",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left",
-            "displayMode": "auto"
-          },
-          "mappings": [],
-          "max": 40,
-          "min": 5,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "dark-yellow",
-                "value": 10
-              },
-              {
-                "color": "#6ED0E0",
-                "value": 20
-              },
-              {
-                "color": "dark-green",
-                "value": 30
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Horas"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Colaborador"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 154
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 7,
-        "x": 7,
-        "y": 11
-      },
-      "id": 7,
-      "options": {
-        "frameIndex": 2,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Horas"
-          }
-        ]
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "created_by_name",
-          "rawQuery": true,
-          "rawSql": "SELECT user_name AS 'Colaborador' , SUM(value) AS 'Horas' FROM  `time_records` \nWHERE $__timeFilter(record_date) AND state = 3 \nAND (billable_status = 0 OR billable_status = 1  OR billable_status = 2 OR billable_status = 3) \nGROUP BY user_name ;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "billable_status"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "created_on",
-          "timeColumnType": "datetime",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "table"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Horas por Cliente",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": "left"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Cliente"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 152
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 5,
-        "x": 14,
-        "y": 11
-      },
-      "id": 20,
-      "options": {
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": [
-          {
-            "desc": true,
-            "displayName": "Horas"
-          }
-        ]
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "created_by_name",
-          "rawQuery": true,
-          "rawSql": "SELECT \n\tc.name AS Cliente , \n\tSUM(value) AS 'Horas Totais' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND ( tr.billable_status = 0  OR tr.billable_status = 1  OR tr.billable_status = 2 OR tr.billable_status = 3) \nGROUP BY c.id order by `Horas Totais` DESC  ;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "billable_status"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "time_records",
-          "timeColumn": "created_on",
-          "timeColumnType": "datetime",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        },
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT \n\tc.name AS Cliente , \n\tSUM(value) AS 'Horas Faturadas' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND ( tr.billable_status = 1  ) \nGROUP BY c.id order by `Horas Faturadas` DESC ;",
-          "refId": "B",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        },
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "\nSELECT \n\tc.name AS Cliente , \n\tSUM(value) AS 'Horas Não Faturadas' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND ( tr.billable_status = 0   OR tr.billable_status = 2 OR tr.billable_status = 3) \nGROUP BY c.id order by `Horas Não Faturadas` DESC  ;",
-          "refId": "C",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "timeColumn": "time",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "",
-      "type": "table"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "description": "Com meta fixa de minimo 20 horas por semana",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "mappings": [],
-          "max": 30,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 5
-              },
-              {
-                "color": "#6ED0E0",
-                "value": 10
-              },
-              {
-                "color": "green",
-                "value": 20
-              }
-            ]
-          },
-          "unit": "h"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 5,
-        "x": 19,
-        "y": 11
-      },
-      "id": 17,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "mean"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "7.0.6",
-      "targets": [
-        {
-          "format": "table",
-          "group": [],
-          "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT \n\tSUM(value) AS 'Horas' \nFROM  `time_records` \nWHERE $__timeFilter(record_date)\nAND state = 3 AND (billable_status = 1  OR billable_status = 2 OR billable_status = 3) ;",
-          "refId": "A",
-          "select": [
-            [
-              {
-                "params": [
-                  "id"
-                ],
-                "type": "column"
-              }
-            ]
-          ],
-          "table": "access_logs",
-          "timeColumn": "accessed_on",
-          "timeColumnType": "timestamp",
-          "where": [
-            {
-              "name": "$__timeFilter",
-              "params": [],
-              "type": "macro"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Meta Semanal de Horas Faturadas",
-      "type": "gauge"
-    },
-    {
-      "datasource": "MySQL (Active Collab)",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {
-            "align": null
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1249,31 +104,43 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 153
+                "value": 136
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 9,
         "w": 7,
         "x": 0,
-        "y": 16
+        "y": 1
       },
       "id": 26,
       "options": {
-        "showHeader": false,
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.0.6",
+      "pluginVersion": "9.4.3",
       "targets": [
         {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
           "format": "table",
           "group": [],
           "metricColumn": "created_by_name",
           "rawQuery": true,
-          "rawSql": "SELECT\n  created_on as 'time',\n  created_by_name AS metric,\n  action\nFROM activity_logs\nWHERE\n  id > 0\nORDER BY created_on desc limit 5;",
+          "rawSql": "SELECT\n  created_on as 'time',\n  created_by_name AS metric,\n  action\nFROM activity_logs\nWHERE\n  id > 0\nORDER BY created_on desc limit 10;",
           "refId": "A",
           "select": [
             [
@@ -1297,14 +164,1273 @@
           ]
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Log de Atividades",
+      "title": "Atividades Recentes",
       "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Tarefas previstas e bloqueadas",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 40
+              },
+              {
+                "color": "light-red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 2,
+        "x": 7,
+        "y": 1
+      },
+      "id": 11,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand (po.label_id = 17 )\nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Previstas",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Status = NOVO e \nStatus = REABERTO ",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "😀"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 9,
+        "y": 1
+      },
+      "id": 9,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto\nSELECT count(p.id) as 'Tarefas Em Aberto'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nwhere po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NULL;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Em Aberto (Não Atribuídas)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Status = NOVO e \nStatus = REABERTO ",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "light-red",
+                "value": 40
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 12,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto\nSELECT count(p.id) as 'Tarefas Em Aberto'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nwhere po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 10 )\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Em Aberto (Atribuídas)",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Tarefas com status ANDAMENTO",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "Como assim?",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 15,
+        "y": 1
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 8 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Em Andamento",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Tarefas com status REVISAO",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "\\o/",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "light-red",
+                "value": 10
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 18,
+        "y": 1
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 18 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Em Revisão",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Tarefas com status CONCLUIDO",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [
+            {
+              "options": {
+                "0": {
+                  "text": "😀"
+                }
+              },
+              "type": "value"
+            }
+          ],
+          "noValue": "\\o/",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 21,
+        "y": 1
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand po.label_id = 9 \nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Concluídas",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "noValue": "zero",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 2,
+        "x": 7,
+        "y": 4
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT count(p.id) as 'Tarefas Em Andamento'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\n\nwhere po.type = 'Task' \nand (po.label_id = 7 )\nand po.state = 3 \nand po.completed_on is NULL \nand p.completed_on is NULL ;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "parent_id",
+          "timeColumnType": "int",
+          "where": []
+        }
+      ],
+      "title": "Bloqueadas",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 17,
+        "x": 7,
+        "y": 8
+      },
+      "id": 24,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "\n<h1 style=\"font-size:40px; text-align:center\"> \nRegistros do Período Selecionado </h1>\n\n\n\n\n",
+        "mode": "html"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  accessed_on AS \"time\",\n  id\nFROM access_logs\nWHERE\n  $__timeFilter(accessed_on)\nORDER BY accessed_on",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "access_logs",
+          "timeColumn": "accessed_on",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "Tarefas alocadas para os colaboradores",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 10
+              },
+              {
+                "color": "red",
+                "value": 20
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 0,
+        "y": 10
+      },
+      "id": 19,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "/^Tarefas$/",
+          "values": true
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto ATRIBUIDAS\nSELECT u.first_name AS 'Colaborador' , count(po.id) as 'Tarefas'\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nleft join users u ON (u.id = po.assignee_id )\nWHERE  po.type = 'Task' \nand (po.label_id = 1 OR po.label_id = 8 OR po.label_id = 10 OR po.label_id = 18)\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL\nGROUP by u.id \n;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Distribuição de Tarefas",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 20,
+          "min": 1,
+          "noValue": "🙁",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 10
+              },
+              {
+                "color": "blue",
+                "value": 20
+              },
+              {
+                "color": "green",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "h"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 2,
+        "x": 7,
+        "y": 10
+      },
+      "id": 29,
+      "options": {
+        "displayMode": "basic",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT SUM(value) from (\nSELECT value FROM `time_records` WHERE $__timeFilter(record_date) AND state = 3 AND parent_type = \"Task\" AND (billable_status = 1  OR billable_status = 2 OR billable_status = 3) union all\nSELECT value/130 FROM `expenses` WHERE $__timeFilter(record_date) AND state = 3  AND (billable_status = 1  OR billable_status = 2 OR billable_status = 3) \n    )\nx",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "access_logs",
+          "timeColumn": "accessed_on",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Faturadas 😀",
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "noValue": "🙁"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 6,
+        "x": 9,
+        "y": 10
+      },
+      "id": 32,
+      "options": {
+        "displayLabels": [
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": []
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "dataset": "projetos",
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "SELECT \n\tc.name AS 'Cliente' , \n\t(value) AS 'Faturadas' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND parent_type = \"Task\"\nAND ( tr.billable_status = 1  ) \nGROUP BY c.id;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Faturadas 😀",
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 100,
+          "min": 1,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "blue",
+                "value": 10
+              },
+              {
+                "color": "#EAB839",
+                "value": 20
+              },
+              {
+                "color": "red",
+                "value": 30
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 2,
+        "x": 15,
+        "y": 10
+      },
+      "id": 34,
+      "options": {
+        "displayMode": "basic",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "\nSELECT SUM(value) FROM `time_records` WHERE $__timeFilter(record_date) \nAND state = 3 AND parent_type = \"Task\" AND (billable_status = 0  ) \n\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "id"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "access_logs",
+          "timeColumn": "accessed_on",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Não Faturadas 🙁",
+      "transparent": true,
+      "type": "bargauge"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            }
+          },
+          "mappings": [],
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 7,
+        "x": 17,
+        "y": 10
+      },
+      "id": 33,
+      "options": {
+        "displayLabels": [
+          "value"
+        ],
+        "legend": {
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true,
+          "values": []
+        },
+        "pieType": "pie",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "dataset": "projetos",
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "hide": false,
+          "rawQuery": true,
+          "rawSql": "\nSELECT \n\tc.name AS Cliente , \n\tSUM(value) AS 'Ñ Faturadas' \nFROM  `time_records` tr\nLEFT JOIN project_objects po ON (po.id = tr.parent_id)\nLEFT JOIN projects p ON (p.id = po.project_id)\nLEFT JOIN companies c ON (c.id = p.company_id)\n\nWHERE $__timeFilter(record_date)\nAND tr.state = 3\nAND parent_type = \"Task\"\nAND ( tr.billable_status = 0   OR tr.billable_status = 2 OR tr.billable_status = 3) \nGROUP BY c.id order by `Ñ Faturadas` DESC  ;",
+          "refId": "A",
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          }
+        }
+      ],
+      "title": "Não Faturadas 🙁",
+      "transparent": true,
+      "type": "piechart"
+    },
+    {
+      "datasource": {
+        "type": "mysql",
+        "uid": "tLHfrEb4k"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 2
+              },
+              {
+                "color": "#EAB839",
+                "value": 5
+              },
+              {
+                "color": "red",
+                "value": 7
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 7,
+        "x": 0,
+        "y": 16
+      },
+      "id": 21,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "vertical",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "/^count\\(po\\.id\\)$/",
+          "values": true
+        },
+        "textMode": "value_and_name"
+      },
+      "pluginVersion": "9.4.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "mysql",
+            "uid": "tLHfrEb4k"
+          },
+          "editorMode": "code",
+          "format": "table",
+          "group": [],
+          "metricColumn": "created_by_name",
+          "rawQuery": true,
+          "rawSql": "-- Tarefas Em aberto ATRIBUIDAS\nSELECT u.first_name as 'Colaborador' , count(po.id)\nfrom project_objects po\nleft join projects p ON (po.project_id = p.id )\nleft join users u ON (u.id = po.assignee_id )\nWHERE  po.type = 'Task' \nand (po.label_id = 8)\nand po.state = 3 \nand po.completed_on is NULL\nand p.completed_on is NULL\nand po.assignee_id is NOT NULL\nGROUP by u.id \n;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "billable_status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "sql": {
+            "columns": [
+              {
+                "parameters": [],
+                "type": "function"
+              }
+            ],
+            "groupBy": [
+              {
+                "property": {
+                  "type": "string"
+                },
+                "type": "groupBy"
+              }
+            ],
+            "limit": 50
+          },
+          "table": "time_records",
+          "timeColumn": "created_on",
+          "timeColumnType": "datetime",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "title": "Em andamento",
+      "transparent": true,
+      "type": "stat"
     }
   ],
   "refresh": "1m",
-  "schemaVersion": 25,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1328,7 +1454,8 @@
     ]
   },
   "timezone": "America/Campo_Grande",
-  "title": "Dashboard Produção da Equipe",
+  "title": "Dashboard Produção Publico dothCom",
   "uid": "HPWO9eGMz",
-  "version": 108
+  "version": 11,
+  "weekStart": ""
 }
