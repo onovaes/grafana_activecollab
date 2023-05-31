@@ -3,4 +3,5 @@ datasources:
     type: mysql
     url: localhost:3306
     user: grafana
+    editable: true
     database: active_collab_database
