@@ -25,7 +25,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -118,6 +117,7 @@
       },
       "id": 26,
       "options": {
+        "cellHeight": "sm",
         "footer": {
           "countRows": false,
           "fields": "",
@@ -129,7 +129,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -218,7 +218,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -309,7 +309,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -392,7 +392,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -471,7 +471,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -554,7 +554,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -642,7 +642,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -725,7 +725,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -778,7 +778,7 @@
         "content": "\n<h1 style=\"font-size:40px; text-align:center\"> \nRegistros do Período Selecionado </h1>\n\n\n\n\n",
         "mode": "html"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -864,7 +864,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -961,9 +961,10 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -1051,7 +1052,8 @@
       "id": 32,
       "options": {
         "displayLabels": [
-          "value"
+          "value",
+          "name"
         ],
         "legend": {
           "displayMode": "list",
@@ -1166,9 +1168,10 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": true
+        "showUnfilled": true,
+        "valueMode": "color"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
@@ -1257,6 +1260,7 @@
       "id": 33,
       "options": {
         "displayLabels": [
+          "name",
           "value"
         ],
         "legend": {
@@ -1370,7 +1374,7 @@
         },
         "textMode": "value_and_name"
       },
-      "pluginVersion": "9.4.3",
+      "pluginVersion": "9.5.2",
       "targets": [
         {
           "datasource": {
