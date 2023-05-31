@@ -25,6 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -126,7 +127,7 @@
           ],
           "show": false
         },
-        "showHeader": true,
+        "showHeader": false,
         "sortBy": []
       },
       "pluginVersion": "9.5.2",
@@ -1460,6 +1461,6 @@
   "timezone": "America/Campo_Grande",
   "title": "Dashboard Produção - Tarefas",
   "uid": "HPWO9eGMz",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
