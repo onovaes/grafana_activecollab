@@ -45,7 +45,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "fieldConfig": {
         "defaults": {
@@ -134,7 +134,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -170,7 +170,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Tarefas previstas e bloqueadas",
       "fieldConfig": {
@@ -223,7 +223,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -253,7 +253,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Status = NOVO e \nStatus = REABERTO ",
       "fieldConfig": {
@@ -314,7 +314,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -344,7 +344,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Status = NOVO e \nStatus = REABERTO ",
       "fieldConfig": {
@@ -397,7 +397,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -427,7 +427,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Tarefas com status ANDAMENTO",
       "fieldConfig": {
@@ -476,7 +476,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -506,7 +506,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Tarefas com status REVISAO",
       "fieldConfig": {
@@ -559,7 +559,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -589,7 +589,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Tarefas com status CONCLUIDO",
       "fieldConfig": {
@@ -647,7 +647,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -677,7 +677,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "",
       "fieldConfig": {
@@ -730,7 +730,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -760,7 +760,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "gridPos": {
         "h": 2,
@@ -783,7 +783,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "time_series",
           "group": [],
@@ -818,7 +818,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "Tarefas alocadas para os colaboradores",
       "fieldConfig": {
@@ -869,7 +869,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "format": "table",
           "group": [],
@@ -905,7 +905,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "",
       "fieldConfig": {
@@ -968,7 +968,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "editorMode": "code",
           "format": "table",
@@ -1022,7 +1022,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "",
       "fieldConfig": {
@@ -1078,7 +1078,7 @@
           "dataset": "projetos",
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "editorMode": "code",
           "format": "table",
@@ -1111,7 +1111,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "",
       "fieldConfig": {
@@ -1173,7 +1173,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "editorMode": "code",
           "format": "table",
@@ -1228,7 +1228,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "",
       "fieldConfig": {
@@ -1284,7 +1284,7 @@
           "dataset": "projetos",
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "editorMode": "code",
           "format": "table",
@@ -1318,7 +1318,7 @@
     {
       "datasource": {
         "type": "mysql",
-        "uid": "tLHfrEb4k"
+        "uid": "PB3D4B2622766C1D4"
       },
       "description": "",
       "fieldConfig": {
@@ -1375,7 +1375,7 @@
         {
           "datasource": {
             "type": "mysql",
-            "uid": "tLHfrEb4k"
+            "uid": "PB3D4B2622766C1D4"
           },
           "editorMode": "code",
           "format": "table",
@@ -1454,8 +1454,8 @@
     ]
   },
   "timezone": "America/Campo_Grande",
-  "title": "Dashboard Produção Publico dothCom",
+  "title": "Dashboard Produção - Tarefas",
   "uid": "HPWO9eGMz",
-  "version": 11,
+  "version": 1,
   "weekStart": ""
 }

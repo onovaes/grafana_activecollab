@@ -1,0 +1,6 @@
+datasources:
+  - name: active-collab-datasource
+    type: mysql
+    url: localhost:3306
+    user: grafana
+    database: active_collab_database
