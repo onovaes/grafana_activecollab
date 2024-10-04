@@ -13,3 +13,8 @@ services:
 
 volumes:
   grafana-data:
+
+networks:
+  default:
+    external: true
+    name: docker-network
